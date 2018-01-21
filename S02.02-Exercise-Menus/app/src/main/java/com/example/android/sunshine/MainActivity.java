@@ -124,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
         if (itemThatWasClickedId == R.id.action_refresh) {
             Context context = MainActivity.this;
             String textToShow = "Refresh clicked";
-            Toast.makeText(context, textToShow, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, textToShow, Toast.LENGTH_SHORT).show();
+            mWeatherTextView.setText("");
+            loadWeatherData();
             return true;
         }
         return super.onOptionsItemSelected(item);
