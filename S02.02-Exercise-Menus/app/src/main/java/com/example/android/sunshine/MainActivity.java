@@ -15,10 +15,14 @@
  */
 package com.example.android.sunshine;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.data.SunshinePreferences;
 import com.example.android.sunshine.utilities.NetworkUtils;
@@ -103,6 +107,26 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (5) Override onCreateOptionsMenu to inflate the menu for this Activity
     // TODO (6) Return true to display the menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // COMPLETED (9) Within onCreateOptionsMenu, use getMenuInflater().inflate to inflate the menu
+        getMenuInflater().inflate(R.menu.forecast, menu);
+        // COMPLETED (10) Return true to display your menu
+        return true;
+    }
+
+
 
     // TODO (7) Override onOptionsItemSelected to handle clicks on the refresh button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_refresh) {
+            Context context = MainActivity.this;
+            String textToShow = "Refresh clicked";
+            Toast.makeText(context, textToShow, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
