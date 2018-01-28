@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO (16) Add a ProgressBar variable to show and hide the progress bar
     ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
