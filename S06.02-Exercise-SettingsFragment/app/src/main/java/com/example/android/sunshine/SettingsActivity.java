@@ -52,6 +52,9 @@ public class SettingsActivity extends AppCompatActivity {
         // TODO (11) Override onSharedPreferenceChanged to update non CheckBoxPreferences when they are changed
     }
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
