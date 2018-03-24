@@ -304,10 +304,17 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        throw new RuntimeException("Student, you need to implement the delete method!");
+        //throw new RuntimeException("Student, you need to implement the delete method!");
 
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        int match = sUriMatcher.match(uri);
+        int result = 0;
+        if (selection == null)
+            result = db.delete(WeatherContract.WeatherEntry.TABLE_NAME, null, null);
 //          TODO (2) Only implement the functionality, given the proper URI, to delete ALL rows in the weather table
+        getContext().getContentResolver().notifyChange(uri, null);
 
+        return result;
 //      TODO (3) Return the number of rows deleted
     }
 
