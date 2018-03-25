@@ -22,16 +22,39 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.example.android.sunshine.data.WeatherContract;
+import com.firebase.jobdispatcher.Driver;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Trigger;
+
+import java.util.concurrent.TimeUnit;
 
 public class SunshineSyncUtils {
 
 //  TODO (10) Add constant values to sync Sunshine every 3 - 4 hours
-
+    private static final int SYNC_INTERVAL_MINUTES = 210;
+    private static final int SYNC_INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(SYNC_INTERVAL_MINUTES));
+    private static final int SYNC_FLEXTIME_MINUTES = 30;
+    private static final int SYNC_FLEXTIME_SECONDS = (int) (TimeUnit.MINUTES.toSeconds((SYNC_FLEXTIME_MINUTES)));
     private static boolean sInitialized;
 
 //  TODO (11) Add a sync tag to identify our sync job
+    private static final String SYNC_JOB_TAG = "sync_job_tag";
 
 //  TODO (12) Create a method to schedule our periodic weather sync
+    synchronized public static void scheduleSyncJob (@NonNull final Context context) {
+        Driver driver = new GooglePlayDriver(context);
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
+        Job job = dispatcher.newJobBuilder()
+                .setService(SunshineFirebaseJobService.class)
+                .setTag(SYNC_JOB_TAG)
+                .setRecurring(true)
+                .setReplaceCurrent(true)
+                .setTrigger(Trigger.executionWindow(SYNC_INTERVAL_SECONDS, SYNC_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))
+                .build();
+
+    }
 
     /**
      * Creates periodic sync tasks and checks to see if an immediate sync is required. If an
@@ -52,6 +75,7 @@ public class SunshineSyncUtils {
 
 //      TODO (13) Call the method you created to schedule a periodic weather sync
 
+        scheduleSyncJob(context);
         /*
          * We need to check to see if our ContentProvider has data to display in our forecast
          * list. However, performing a query on the main thread is a bad idea as this may
