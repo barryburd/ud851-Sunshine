@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.utilities.SunshineDateUtils;
@@ -129,7 +130,11 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
 
         String weatherSummary = dateString + " - " + description + " - " + highAndLowTemperature;
 
-        forecastAdapterViewHolder.weatherSummary.setText(weatherSummary);
+        //forecastAdapterViewHolder.weatherSummary.setText(weatherSummary);
+        forecastAdapterViewHolder.textViewDay.setText(dateString);
+        forecastAdapterViewHolder.textViewCondition.setText(description);
+        forecastAdapterViewHolder.textViewTempHigh.setText(""+highInCelsius);
+        forecastAdapterViewHolder.textViewTempLow.setText(""+lowInCelsius);
     }
 
     /**
@@ -164,15 +169,25 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      */
     class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 //      TODO (4) Replace the weatherSummary TextView with individual weather detail TextViews
-        final TextView weatherSummary;
+        //final TextView weatherSummary;
+        final TextView textViewDay;
+        final TextView textViewCondition;
+        final TextView textViewTempHigh;
+        final TextView textViewTempLow;
 
 //      TODO (5) Add an ImageView for the weather icon
 
+        ImageView imageView;
         ForecastAdapterViewHolder(View view) {
             super(view);
 
 //          TODO (6) Get references to all new views and delete this line
-            weatherSummary = (TextView) view.findViewById(R.id.tv_weather_data);
+            //weatherSummary = (TextView) view.findViewById(R.id.tv_weather_data);
+            textViewDay = (TextView) view.findViewById(R.id.textViewDay);
+            textViewCondition = (TextView) view.findViewById(R.id.textViewCondition);
+            textViewTempHigh = (TextView) view.findViewById(R.id.textViewTempHigh);
+            textViewTempLow = (TextView) view.findViewById(R.id.textViewTempLow);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
 
             view.setOnClickListener(this);
         }
